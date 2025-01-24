@@ -1,0 +1,61 @@
+Bot Set Up Instructions: 
+
+1. Set up an Oanda Account
+
+Create an Account: Go to the Oanda website and sign up for a trading account. You can choose a live account if you're ready to trade with real money or a demo account for practice and testing.
+Enable API Access:
+Log in to your Oanda account.
+Navigate to "Account" -> "My Account".
+Click on the "API Access" tab.
+Generate an API token. Make sure to store this token securely, as it's essential for the bot to access your account.
+Note your account ID, which you'll also need for the bot.
+2. Set up a VPS
+
+Choose a VPS Provider: Select a reliable VPS provider that meets your needs. Some popular options include:
+Vultr: Offers a variety of VPS plans at competitive prices.
+DigitalOcean: Known for its user-friendly interface and good performance.
+Linode: Provides a good balance of price and performance.
+AWS Lightsail: Offers simple and affordable VPS solutions from Amazon Web Services.
+Select a Plan: Choose a VPS plan with sufficient resources (CPU, RAM, storage) to run your trading bot. The basic plans are usually enough for this bot.
+Choose a Server Location: Select a server location that is geographically close to Oanda's servers for optimal latency and trade execution speed. For example, if you're trading in the US, choose a server located in New York or Chicago.
+Deploy the VPS: Follow the VPS provider's instructions to deploy your virtual server. This typically involves selecting an operating system (e.g., Ubuntu, CentOS) and creating a new instance.
+3. Configure the VPS
+
+Connect to the VPS: Use an SSH client (like PuTTY or Terminal) to connect to your VPS using the provided IP address, username, and password.
+Update the System: Update the package list and upgrade the installed packages to their latest versions:
+Bash
+
+sudo apt update  # For Ubuntu/Debian
+sudo apt upgrade -y
+Install Required Packages: Install Python, pip, and the necessary libraries:
+Bash
+
+sudo apt install python3 python3-pip -y
+pip3 install oandapyV20 pandas Flask
+Upload the Bot Files: Upload your trading bot script (trading_bot.py) and the HTML template (trades.html) to the VPS. You can use tools like scp (secure copy) or FileZilla for file transfer.
+Install SQLite: Install the SQLite database:
+Bash
+
+sudo apt-get install sqlite3 -y
+4. Run the Trading Bot
+
+Navigate to the Bot Directory: Use the cd command to navigate to the directory where you uploaded the bot files.
+Run the Script: Execute the Python script:
+Bash
+
+python3 trading_bot.py
+Access the Web Interface: Open a web browser on your local machine and go to the VPS's IP address (or domain name if you set one up) in the format http://<VPS_IP_address>:5000/ to view the trade history and metrics.
+5. Monitoring and Maintenance
+
+Monitor the Logs: Regularly check the trading_bot.log file on the VPS for any errors or issues.
+Keep the Bot Running: Ensure the bot script continues to run on the VPS. You might need to use tools like screen or tmux to keep the process alive even if you disconnect from the SSH session.
+Update the Bot: Update the bot's code as needed to improve the strategy, add features, or fix bugs.
+Secure the VPS: Implement security best practices on your VPS, such as strong passwords, firewall configuration, and regular security updates.
+Important Considerations:
+
+Demo Account: Start with a demo account to test the bot and ensure it's working as expected before using it with real money.
+Risk Management: Carefully consider your risk tolerance and adjust the risk_percentage parameter accordingly.
+Market Conditions: The bot's performance may vary depending on market conditions. Monitor the bot's activity and make adjustments to the strategy as needed.
+VPS Security: Ensure your VPS is secure and protected from unauthorized access.
+Oanda API Limits: Be aware of the Oanda API usage limits to avoid any issues with your bot's operation.
+By following these steps, you can set up a VPS and an Oanda account to effectively test and run your EUR/USD trading bot. Remember to always trade responsibly and within your means.
