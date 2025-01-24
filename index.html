@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trade History</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .profit {
+            color: green;
+        }
+        .loss {
+            color: red;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trade History</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Instrument</th>
+                        <th>Units</th>
+                        <th>Entry Price</th>
+                        <th>Stop Loss</th>
+                        <th>Exit Price</th>
+                        <th>Profit/Loss</th>
+                        <th>Profit Ratio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trade in trades %}
+                    <tr>
+                        <td>{{ trade[1] }}</td>
+                        <td>{{ trade[2] }}</td>
+                        <td>{{ trade[3] }}</td>
+                        <td>{{ trade[4] }}</td>
+                        <td>{{ trade[5] }}</td>
+                        <td>{{ trade[6] }}</td>
+                        <td class="{{ 'profit' if trade[7] > 0 else 'loss' }}">{{ trade[7] }}</td>
+                        <td class="{{ 'profit' if trade[8] > 0 else 'loss' }}">{{ trade[8] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="profitLossChart"></canvas>
+        </div>
+
+        <script>
+            // Get the profit/loss data from the trades
+            var profitLossData = [
+                {% for trade in trades %}
+                    {{ trade[7] }},
+                {% endfor %}
+            ];
+
+            // Create a line chart using Chart.js
+            var ctx = document.getElementById('profitLossChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: profitLossData.length}, (_, i) => i + 1), // Trade numbers
+                    datasets: [{
+                        label: 'Profit/Loss',
+                        data: profitLossData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
