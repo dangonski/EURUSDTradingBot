@@ -1,4 +1,5 @@
 EUR/USD Trading Bot with Oanda API
+
 This is an automated trading bot that uses the Oanda API to trade the EUR/USD currency pair. It incorporates technical analysis, risk management, and trade monitoring features to execute trades based on a defined strategy.
 
 Key Features:
